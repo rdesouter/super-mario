@@ -1,0 +1,26 @@
+{
+  "name": "super-mario-bross",
+  "version": "1.0.0",
+  "description": "super mario in JS",
+  "main": "index.js",
+  "scripts": {
+    "start": "serve ./public",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rdesouter/super-mario.git"
+  },
+  "keywords": [
+    "root"
+  ],
+  "author": "ronald de souter",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rdesouter/super-mario/issues"
+  },
+  "homepage": "https://github.com/rdesouter/super-mario#readme",
+  "dependencies": {
+    "serve": "^11.3.0"
+  }
+}
