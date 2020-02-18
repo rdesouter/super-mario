@@ -1,0 +1,23 @@
+{
+  "name": "super-mario",
+  "version": "1.0.0",
+  "description": "an classic arcade game coding with javascript",
+  "main": "index.js",
+  "scripts": {
+    "start": "serve ./super-mario",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rdesouter/super-mario.git"
+  },
+  "author": "ronald de souter",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rdesouter/super-mario/issues"
+  },
+  "homepage": "https://github.com/rdesouter/super-mario#readme",
+  "dependencies": {
+    "serve": "^11.3.0"
+  }
+}
