@@ -1,40 +1,49 @@
-import SpriteSheet from './SpriteSheet.js';
-import { loadImage, loadLevel } from './loader.js';
+import Compositor from './Compositor.js';
+import { loadLevel } from './loader.js';
+import {loadBackgroundSprite, loadMarioSprite} from './sprite.js';
+import { createBackgroundLayer } from './layer.js';
 
-function drawBackground(background, context, sprites) {
-    background.ranges.forEach(([x1, x2, y1, y2]) => {
-        for (let x = x1; x < x2; x++) {
-            for (let y = y1; y < y2; y++) {
-                sprites.drawTile(background.tile, context, x, y);
-            }
-        }
-    });
-}
 
-function loadBackgroundSprite() {
-    return loadImage('/img/sprite.png')
-        .then(image => {
-            console.log("Image load", image);
-            const sprites = new SpriteSheet(image, 40, 40);
-            sprites.define('ground', 2, 0);
-            sprites.define('sky', 2, 3);
-            return sprites;
-        });
-}
 
 const canvas = document.getElementById('screen');
 const context = canvas.getContext('2d');
 
+function createSpriteLayer(sprite, position){
+    return function drawSpriteLayer(context){
+        for (let i = 0; i < 120; i++) {
+            sprite.draw('idle', context, position.x + i * 3 , position.y);
+        }
+    };
+}
+
 //load the images and the level json in parallel
 Promise.all([
+    loadMarioSprite(),
     loadBackgroundSprite(),
     loadLevel('1-1'),
 ])
-    .then(([sprites, level,]) => {
-        console.log("Level load", level);
-        level.backgrounds.forEach(background => {
-            console.log("background", background);
-            drawBackground(background, context, sprites);
-        });
+    .then(([marioSprite, backgroundSprites, level,]) => {
+        const comp = new Compositor();
+        console.log("level", level);
+        
+        const backgroundLayer = createBackgroundLayer(level.backgrounds, backgroundSprites);
+        comp.layers.push(backgroundLayer);
+
+        const position = {
+            x: 0,
+            y: 0,
+        };
+
+        const spriteLayer = createSpriteLayer(marioSprite, position);
+        comp.layers.push(spriteLayer);
+        function update(){
+            comp.draw(context);
+            marioSprite.draw('idle', context, position.x, position.y);
+            position.x += 2;
+            position.y += 2;
+            requestAnimationFrame(update);
+        }
+        update();
+        
     });
 
