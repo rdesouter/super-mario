@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +8,17 @@
     <title>Super Mario</title>
     <script type="module" src="/js/main.js"></script>
 </head>
+
 <body>
-    <canvas id="screen" width="1920" height="720"></canvas>
+    <canvas id="screen" width="1400" height="560"></canvas>
+
+    <p>Made in : <span id="datetime"></span></p>
+    <script>
+            const d = new Date();
+            let currentYear = d.getFullYear();
+            let previousYear = d.getFullYear() - 1;
+            document.getElementById("datetime").innerHTML = previousYear + " - " + currentYear;
+    </script>
 </body>
+
 </html>
