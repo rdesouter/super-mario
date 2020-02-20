@@ -21,24 +21,36 @@ Promise.all([
         const backgroundLayer = createBackgroundLayer(level.backgrounds, backgroundSprites);
         //comp.layers.push(backgroundLayer);
 
-        const gravity = 0.5;
-
-    
-
+        const gravity = 30;
+        mario.position.set(0, 440);
+        mario.velocity.set(200, -600);
 
         const spriteLayer = createSpriteLayer(mario);
         comp.layers.push(spriteLayer);
 
-        function update() {
+        let deltaTime = 0;
+        let lastTime = 0;
+
+        function update(time) {
+            
+            // working with second so divide time per 1000
+            deltaTime = (time - lastTime) / 1000;
+            console.log(deltaTime);
+            
+            //console.log(deltaTime, time);
+            
             comp.draw(context);
-            mario.update();
+            mario.update(deltaTime);
+            
+            //console.log(mario.position);
             mario.velocity.y += gravity;
             //requestAnimationFrame(update);
-            // setTimeout do the same than requestAnimationFrame except counting 
-            //frame from browser don't use for real just for debug
-            setTimeout(update, 1000/60);
+
+            //only use for debugging and simulate 144fps or 5fps screen
+            setTimeout(update, 1000/60, performance.now());
+            lastTime = time;
         }
-        update();
+        update(0);
 
     });
 
