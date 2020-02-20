@@ -1,49 +1,41 @@
 import Compositor from './Compositor.js';
+import Timer from './Timer.js';
 import { loadLevel } from './loader.js';
-import {loadBackgroundSprite, loadMarioSprite} from './sprite.js';
-import { createBackgroundLayer } from './layer.js';
-
-
+import { createMario } from './entities.js';
+import { loadBackgroundSprite } from './sprite.js';
+import { createBackgroundLayer, createSpriteLayer } from './layer.js';
 
 const canvas = document.getElementById('screen');
 const context = canvas.getContext('2d');
 
-function createSpriteLayer(sprite, position){
-    return function drawSpriteLayer(context){
-        for (let i = 0; i < 120; i++) {
-            sprite.draw('idle', context, position.x + i * 3 , position.y);
-        }
-    };
-}
-
 //load the images and the level json in parallel
 Promise.all([
-    loadMarioSprite(),
+    createMario(),
     loadBackgroundSprite(),
     loadLevel('1-1'),
 ])
-    .then(([marioSprite, backgroundSprites, level,]) => {
+    .then(([mario, backgroundSprites, level,]) => {
         const comp = new Compositor();
         console.log("level", level);
-        
+
         const backgroundLayer = createBackgroundLayer(level.backgrounds, backgroundSprites);
         comp.layers.push(backgroundLayer);
 
-        const position = {
-            x: 0,
-            y: 0,
-        };
+        const gravity = 30;
+        mario.position.set(0, 440);
+        mario.velocity.set(300, -900);
 
-        const spriteLayer = createSpriteLayer(marioSprite, position);
+        const spriteLayer = createSpriteLayer(mario);
         comp.layers.push(spriteLayer);
-        function update(){
+
+        // frame length instead of frame rate
+        let timer = new Timer(1/60);
+        timer.update = function update(deltaTime) {
             comp.draw(context);
-            marioSprite.draw('idle', context, position.x, position.y);
-            position.x += 2;
-            position.y += 2;
-            requestAnimationFrame(update);
+            mario.update(deltaTime);
+            //console.log(mario.position);
+            mario.velocity.y += gravity;
         }
-        update();
-        
+        timer.start();
     });
 
