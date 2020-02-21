@@ -10,15 +10,9 @@ import { createBackgroundLayer, createSpriteLayer } from './layer.js';
 
 // window.addEventListener('keyup', event => {
 //     event.preventDefault();
-//     console.log(event);
-    
+//     console.log(event); 
 // })
 
-const input = new Keyboard();
-input.addMapping('ArrowDown', keyState => {
-    //console.log(keyState);
-});
-input.listenTo(window);
 
 const canvas = document.getElementById('screen');
 const context = canvas.getContext('2d');
@@ -38,7 +32,19 @@ Promise.all([
 
         const gravity = 1800;
         mario.position.set(0, 440);
-        mario.velocity.set(300, -900);
+        mario.vel.set(300, -900);
+
+        //keyboard touch for mario's actions
+        const input = new Keyboard();
+        input.addMapping('ArrowDown', keyState => {
+            if (keyState) {
+                mario.jump.start();
+            }
+            else {
+                mario.jump.cancel();
+            }
+        });
+        input.listenTo(window);
 
         const spriteLayer = createSpriteLayer(mario);
         comp.layers.push(spriteLayer);
@@ -50,7 +56,7 @@ Promise.all([
             mario.update(deltaTime);
             comp.draw(context);
             //console.log(mario.position);
-            mario.velocity.y += gravity * deltaTime;
+            mario.vel.y += gravity * deltaTime;
         }
         timer.start();
     });
