@@ -1,19 +1,24 @@
 import Compositor from './Compositor.js';
 import Timer from './Timer.js';
+import Keyboard from './KeyboardState.js';
+
 import { loadLevel } from './loader.js';
 import { createMario } from './entities.js';
 import { loadBackgroundSprite } from './sprite.js';
 import { createBackgroundLayer, createSpriteLayer } from './layer.js';
 
-window.addEventListener('keydown', event => {
-    /**
-     * preventDefault use for example when 
-     * you pressed down key to scroll down the browser page
-     */
-    event.preventDefault();
-    console.log(event);
 
-})
+// window.addEventListener('keyup', event => {
+//     event.preventDefault();
+//     console.log(event);
+    
+// })
+
+const input = new Keyboard();
+input.addMapping('ArrowDown', keyState => {
+    //console.log(keyState);
+});
+input.listenTo(window);
 
 const canvas = document.getElementById('screen');
 const context = canvas.getContext('2d');
