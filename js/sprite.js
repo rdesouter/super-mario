@@ -10,7 +10,7 @@ export function loadMarioSprite() {
         });
 }
 
-export function loadBackgroundSprite() {
+export function loadBackgroundSprites() {
     return loadImage('/img/sprite.png')
         .then(image => {
             console.log("Image load", image);
