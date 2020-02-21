@@ -30,13 +30,13 @@ Promise.all([
         const backgroundLayer = createBackgroundLayer(level.backgrounds, backgroundSprites);
         comp.layers.push(backgroundLayer);
 
-        const gravity = 1800;
-        mario.position.set(0, 440);
-        mario.vel.set(300, -900);
+        const gravity = 1000;
+        mario.position.set(80, 440);
+        // mario.vel.set(300, -900);
 
         //keyboard touch for mario's actions
         const input = new Keyboard();
-        input.addMapping('ArrowDown', keyState => {
+        input.addMapping('ArrowUp', keyState => {
             if (keyState) {
                 mario.jump.start();
             }
