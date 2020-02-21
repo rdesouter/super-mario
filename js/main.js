@@ -39,13 +39,10 @@ Promise.all([
         });
         input.listenTo(window);
 
-
-
         // frame length instead of frame rate
-        let timer = new Timer(1 / 60);
+        const timer = new Timer(1 / 60);
         timer.update = function update(deltaTime) {
-
-            mario.update(deltaTime);
+            level.update(deltaTime);
             level.comp.draw(context);
             //console.log(mario.position);
             mario.vel.y += gravity * deltaTime;
