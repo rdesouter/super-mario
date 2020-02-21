@@ -5,6 +5,16 @@ import { createMario } from './entities.js';
 import { loadBackgroundSprite } from './sprite.js';
 import { createBackgroundLayer, createSpriteLayer } from './layer.js';
 
+window.addEventListener('keydown', event => {
+    /**
+     * preventDefault use for example when 
+     * you pressed down key to scroll down the browser page
+     */
+    event.preventDefault();
+    console.log(event);
+
+})
+
 const canvas = document.getElementById('screen');
 const context = canvas.getContext('2d');
 
@@ -21,7 +31,7 @@ Promise.all([
         const backgroundLayer = createBackgroundLayer(level.backgrounds, backgroundSprites);
         comp.layers.push(backgroundLayer);
 
-        const gravity = 30;
+        const gravity = 1800;
         mario.position.set(0, 440);
         mario.velocity.set(300, -900);
 
@@ -29,12 +39,13 @@ Promise.all([
         comp.layers.push(spriteLayer);
 
         // frame length instead of frame rate
-        let timer = new Timer(1/60);
+        let timer = new Timer(1 / 60);
         timer.update = function update(deltaTime) {
-            comp.draw(context);
+
             mario.update(deltaTime);
+            comp.draw(context);
             //console.log(mario.position);
-            mario.velocity.y += gravity;
+            mario.velocity.y += gravity * deltaTime;
         }
         timer.start();
     });
