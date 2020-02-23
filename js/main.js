@@ -1,11 +1,8 @@
-
 import Timer from './Timer.js';
 import Keyboard from './KeyboardState.js';
 
 import { loadLevel } from './loader.js';
 import { createMario } from './entities.js';
-
-
 
 // window.addEventListener('keyup', event => {
 //     event.preventDefault();
@@ -21,8 +18,6 @@ Promise.all([
     loadLevel('1-1'),
 ])
     .then(([mario, level]) => {
-        console.log("level", level);
-
         const gravity = 1000;
         mario.position.set(80, 100);
         level.entities.add(mario)

@@ -14,7 +14,6 @@ export default class Entity {
     constructor() {
         this.position = new Vector(0, 0);
         this.vel = new Vector(0, 0);
-
         this.actions = [];
     }
 
