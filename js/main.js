@@ -18,7 +18,7 @@ Promise.all([
     loadLevel('1-1'),
 ])
     .then(([mario, level]) => {
-        const gravity = 1000;
+        const gravity = 1200;
         mario.position.set(80, 100);
         level.entities.add(mario)
 
