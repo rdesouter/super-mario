@@ -40,8 +40,8 @@ export function loadLevel(name) {
             const level = new Level();
 
             createTiles(level, LevelSpec.backgrounds);
-
-            const backgroundLayer = createBackgroundLayer(LevelSpec.backgrounds, backgroundSprites);
+               
+            const backgroundLayer = createBackgroundLayer(level, backgroundSprites);
             level.comp.layers.push(backgroundLayer);
 
             // mario doens't exist here but we can use level.entities
